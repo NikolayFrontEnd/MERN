@@ -1,0 +1,55 @@
+1)npm init
+2)npm install express
+3)далее устанавлвиаем npm install nodemon: 
+4)и в packaje json пишем это:   "scripts": {
+    "dev":"nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+5)регистрация: устанавливаем библиотеку jwt tokin. npm instal jsonwebtoken
+6) пишем эту команду чтобы можно было считывать json формат: app.use(express.json());
+7)  далее устанавливаем бибилотеку mongoDB (базуданных) npm install mongoose
+8) пишем этот код:
+import mongoose from 'mongoose';
+mongoose
+        .connect('mongodb+srv://nick:donetsk2@cluster0.cjmncrr.mongodb.net/')
+        .then(()=>console.log('we have connect with our data of base'))
+        .catch((err)=>console.log('we have error with our connection', err));
+9) создаем модель: import mongoose from 'mongoose';
+
+const UserSchema = new mongoose.Schema({
+fullName: {
+    type: String,
+    required: true,
+},
+email: {
+    type: String,
+    required: true,
+    unique:true,  
+},
+passwordHash:{
+type: String,
+required: true,
+},
+
+avatarUrl:String,
+}, 
+{
+timestamps: true,
+
+},
+); 
+
+export default mongoose.model('User', UserSchema)
+10) проверяем валидацию корректно ли нам передали данные. npm install express-validator
+11) auth.js: import { body } from 'express-validator';
+
+export const registerValidator = [
+body('email').isEmail(),
+body('password').isLength({min:5}),
+body('fullName').isLength({min:3}),
+body('avatarUrl').optional().isURL(),
+];
+12)npm install bcrypt - устанавливаем для шифрования
+13) создаем токен ()
+14) создаем мидлворе
+15)загрузка файла npm install multernp
